@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.util.HashSet;
 
 public class Game {
+	public HashSet<String> allWords;
 	public HashSet<String> sixWords;
+	public String myWord;
+	public HashSet<String> subWords;
 	
 	public Game() {
+		allWords = new HashSet<String>();
 		sixWords = new HashSet<String>();
 		loadWords();
 	}
@@ -18,7 +22,8 @@ public class Game {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line = null;
 			while ((line = br.readLine()) != null) {
-				sixWords.add(line);
+				allWords.add(line);
+				if (line.length() == 6) sixWords.add(line);
 			}
 			br.close();
 		} catch (IOException e) {
@@ -27,7 +32,28 @@ public class Game {
 	}
 	
 	public void start() {
-		System.out.println("Game started!");
+		// Pick a random 6 letter word
+		
+		// Create a set of all subwords
+		subWords = getSubWords();
+		
+		// Prompt player
+		prompt();
+	}
+	
+	public void prompt() {
+		// Print jumbled word
+		
+		// Print words so far
+		
+		// Get input
+		
+		// Check if valid word
+	}
+	
+	public HashSet<String> getSubWords() {
+		HashSet<String> result = new HashSet<String>();
+		return result;
 	}
 	
 	public static void main(String[] args) {
