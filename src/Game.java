@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Random;
 
 public class Game {
 	public HashSet<String> allWords;
@@ -33,11 +34,14 @@ public class Game {
 	
 	public void start() {
 		// Pick a random 6 letter word
+		Random random = new Random();
+		String[] array = sixWords.toArray(new String[0]);
+		myWord = array[random.nextInt(array.length)];
 		
 		// Create a set of all subwords
 		subWords = getSubWords();
 		
-		// Prompt player
+		// Prompt player on loop
 		prompt();
 	}
 	
