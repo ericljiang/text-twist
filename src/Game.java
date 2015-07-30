@@ -8,12 +8,18 @@ import java.util.Random;
 public class Game {
 	public HashSet<String> allWords;
 	public HashSet<String> sixWords;
+	
 	public String myWord;
 	public HashSet<String> subWords;
+	public HashSet<String> myGuesses;
+	
+	Random random;
 	
 	public Game() {
 		allWords = new HashSet<String>();
 		sixWords = new HashSet<String>();
+		myGuesses = new HashSet<String>();
+		random = new Random();
 		loadWords();
 	}
 	
@@ -34,7 +40,6 @@ public class Game {
 	
 	public void start() {
 		// Pick a random 6 letter word
-		Random random = new Random();
 		String[] array = sixWords.toArray(new String[0]);
 		myWord = array[random.nextInt(array.length)];
 		
@@ -46,13 +51,32 @@ public class Game {
 	}
 	
 	public void prompt() {
+		System.out.println(myWord);
 		// Print jumbled word
+		System.out.println("Jumbled word:");
+		System.out.println(jumble(myWord));
 		
 		// Print words so far
+		System.out.println("Guesses so far:");
+		myGuesses.forEach(System.out::println);
 		
 		// Get input
 		
 		// Check if valid word
+		
+		// Add to guesses
+	}
+	
+	public String jumble(String word) {
+		String result = "";
+		HashSet<Integer> used = new HashSet<Integer>();
+		while (result.length() < word.length()) {
+			int index = random.nextInt(word.length());
+			if (!used.contains(index)) {
+				result += word.charAt(index);
+			}
+		}
+		return result;
 	}
 	
 	public HashSet<String> getSubWords() {
