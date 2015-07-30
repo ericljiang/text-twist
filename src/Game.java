@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
 	public HashSet<String> allWords;
@@ -61,10 +62,17 @@ public class Game {
 		myGuesses.forEach(System.out::println);
 		
 		// Get input
+		Scanner in = new Scanner(System.in);
+		System.out.print("> ");
+		String guess = in.nextLine();
+		myGuesses.add(guess);
 		
 		// Check if valid word
-		
-		// Add to guesses
+		if (subWords.contains(guess)) {
+			System.out.println("Valid");
+		} else {
+			System.out.println("Not valid");
+		}
 	}
 	
 	public String jumble(String word) {
