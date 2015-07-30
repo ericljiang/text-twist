@@ -3,3 +3,6 @@ List of words less than 6 letters
 Form list of subwords:
 a) Iterate over all words and check each if valid subword
 b) Iterate over all possible subwords and check if in dictionary
+
+To do:
+Time limit
