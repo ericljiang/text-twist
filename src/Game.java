@@ -89,6 +89,11 @@ public class Game {
 	
 	public HashSet<String> getSubWords() {
 		HashSet<String> result = new HashSet<String>();
+		for (String word : allWords) {
+			if (myWord.toLowerCase().contains(word.toLowerCase())) {
+				result.add(word);
+			}
+		}
 		return result;
 	}
 	
