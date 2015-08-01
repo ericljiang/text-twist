@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
@@ -15,6 +16,7 @@ public class Game {
 	public HashSet<String> myGuesses;
 	
 	Random random;
+	Scanner in = new Scanner(System.in);
 	
 	public Game() {
 		allWords = new HashSet<String>();
@@ -26,12 +28,12 @@ public class Game {
 	
 	public void loadWords() {
 		try {
-			File file = new File("enable1.txt");
+			File file = new File("35.txt");
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				allWords.add(line);
-				if (line.length() == 6) sixWords.add(line);
+				if (line.length() == 6 && !line.contains("\'")) sixWords.add(line);
 			}
 			br.close();
 		} catch (IOException e) {
@@ -53,7 +55,7 @@ public class Game {
 		}
 	}
 	
-	public void prompt() {
+	public void prompt() {		
 		System.out.println(myWord);
 		// Print jumbled word
 		System.out.println("Jumbled word:");
@@ -64,7 +66,6 @@ public class Game {
 		myGuesses.forEach(System.out::println);
 		
 		// Get input
-		Scanner in = new Scanner(System.in);
 		System.out.print("> ");
 		String guess = in.nextLine();
 		
@@ -75,6 +76,8 @@ public class Game {
 		} else {
 			System.out.println("Not valid");
 		}
+		
+		System.out.println("-------------");
 	}
 	
 	public String jumble(String word) {
@@ -92,12 +95,40 @@ public class Game {
 	
 	public HashSet<String> getSubWords() {
 		HashSet<String> result = new HashSet<String>();
-		for (String word : allWords) {
-			if (myWord.toLowerCase().contains(word.toLowerCase()) && word.length() > 2) {
-				result.add(word);
+		for (String subword : allWords) {
+			if (isValid(subword, myWord) && subword.length() > 2) {
+				result.add(subword);
+				System.out.println(subword);
 			}
 		}
 		return result;
+	}
+	
+	public boolean isValid(String subword, String word) {
+		// Make map of subword
+		HashMap<Character, Integer> subMap = getCharMap(subword);
+		HashMap<Character, Integer> wordMap = getCharMap(word);
+		
+		for (char c : subMap.keySet()) {
+			if (!wordMap.containsKey(c)) {
+				return false;
+			} else if (subMap.get(c) > wordMap.get(c)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public HashMap<Character, Integer> getCharMap(String word) {
+		HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+		char current;
+		for (int i = 0; i < word.length(); i++) {
+			current = word.charAt(i);
+			if (!map.containsKey(current)) map.put(current, 0);
+			map.put(current, map.get(current) + 1);			
+		}
+		return map;
 	}
 	
 	public static void main(String[] args) {
