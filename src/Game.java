@@ -48,7 +48,9 @@ public class Game {
 		subWords = getSubWords();
 		
 		// Prompt player on loop
-		prompt();
+		while (myGuesses.size() < subWords.size()) {
+			prompt();
+		}
 	}
 	
 	public void prompt() {
@@ -65,11 +67,11 @@ public class Game {
 		Scanner in = new Scanner(System.in);
 		System.out.print("> ");
 		String guess = in.nextLine();
-		myGuesses.add(guess);
 		
 		// Check if valid word
 		if (subWords.contains(guess)) {
 			System.out.println("Valid");
+			myGuesses.add(guess);
 		} else {
 			System.out.println("Not valid");
 		}
