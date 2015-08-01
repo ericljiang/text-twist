@@ -84,6 +84,7 @@ public class Game {
 			int index = random.nextInt(word.length());
 			if (!used.contains(index)) {
 				result += word.charAt(index);
+				used.add(index);
 			}
 		}
 		return result;
@@ -92,7 +93,7 @@ public class Game {
 	public HashSet<String> getSubWords() {
 		HashSet<String> result = new HashSet<String>();
 		for (String word : allWords) {
-			if (myWord.toLowerCase().contains(word.toLowerCase())) {
+			if (myWord.toLowerCase().contains(word.toLowerCase()) && word.length() > 2) {
 				result.add(word);
 			}
 		}
