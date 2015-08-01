@@ -74,14 +74,15 @@ public class Game {
 	}
 	
 	public void prompt() {
+		// Print words so far
+		System.out.println("Guesses so far:");
+		//myGuesses.forEach(System.out::println);
+		printGuesses();
+
 		// Print jumbled word
 		System.out.println("Jumbled word:");
 		System.out.println(jumble(myWord));
-		
-		// Print words so far
-		System.out.println("Guesses so far:");
-		myGuesses.forEach(System.out::println);
-		
+
 		// Get input
 		System.out.print("> ");
 		String guess = in.nextLine();
@@ -95,6 +96,19 @@ public class Game {
 		}
 		
 		System.out.println("-------------");
+	}
+	
+	public void printGuesses() {
+		for (String sub : subWords) {
+			if (myGuesses.contains(sub)) {
+				System.out.println(sub);
+			} else {
+				for (int i = 0; i < sub.length(); i++) {
+					System.out.print("_");
+				}
+				System.out.print("\n");
+			}
+		}
 	}
 	
 	public String jumble(String word) {
@@ -148,7 +162,7 @@ public class Game {
 	}
 	
 	public static void main(String[] args) {
-		Game game = new Game();
+		Game game = new Game(true);
 		game.start();
 	}
 }
