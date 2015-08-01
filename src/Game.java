@@ -18,11 +18,18 @@ public class Game {
 	Random random;
 	Scanner in = new Scanner(System.in);
 	
+	public boolean debug;
+	
 	public Game() {
+		this(false);
+	}
+	
+	public Game(boolean deb) {
 		allWords = new HashSet<String>();
 		sixWords = new HashSet<String>();
 		myGuesses = new HashSet<String>();
 		random = new Random();
+		debug = deb;
 		loadWords();
 	}
 	
@@ -49,14 +56,24 @@ public class Game {
 		// Create a set of all subwords
 		subWords = getSubWords();
 		
+		// Print debug info
+		if (debug) {
+			System.out.println("*DEBUG INFO*");
+			System.out.println("Word: \n" + myWord);
+			System.out.println("Subwords:");
+			for (String s : subWords) {
+				System.out.println(s);
+			}
+			System.out.println("============");
+		}
+		
 		// Prompt player on loop
 		while (myGuesses.size() < subWords.size()) {
 			prompt();
 		}
 	}
 	
-	public void prompt() {		
-		System.out.println(myWord);
+	public void prompt() {
 		// Print jumbled word
 		System.out.println("Jumbled word:");
 		System.out.println(jumble(myWord));
@@ -98,7 +115,6 @@ public class Game {
 		for (String subword : allWords) {
 			if (isValid(subword, myWord) && subword.length() > 2) {
 				result.add(subword);
-				System.out.println(subword);
 			}
 		}
 		return result;
