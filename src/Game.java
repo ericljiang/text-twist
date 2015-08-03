@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -12,7 +14,7 @@ public class Game {
 	public HashSet<String> sixWords;
 	
 	public String myWord;
-	public HashSet<String> subWords;
+	public ArrayList<String> subWords;
 	public HashSet<String> myGuesses;
 	
 	Random random;
@@ -40,7 +42,9 @@ public class Game {
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				allWords.add(line);
-				if (line.length() == 6 && !line.contains("\'")) sixWords.add(line);
+				if (line.length() == 6 && !line.contains("\'")) {
+					sixWords.add(line);
+				}
 			}
 			br.close();
 		} catch (IOException e) {
@@ -53,8 +57,10 @@ public class Game {
 		String[] array = sixWords.toArray(new String[0]);
 		myWord = array[random.nextInt(array.length)];
 		
-		// Create a set of all subwords
+		// Create an ArrayList of all subwords
 		subWords = getSubWords();
+		// Sort by length
+		Collections.sort(subWords, new CustomComparator());
 		
 		// Print debug info
 		if (debug) {
@@ -104,7 +110,7 @@ public class Game {
 				System.out.println(sub);
 			} else {
 				for (int i = 0; i < sub.length(); i++) {
-					System.out.print("_");
+					System.out.print("*");
 				}
 				System.out.print("\n");
 			}
@@ -124,8 +130,8 @@ public class Game {
 		return result;
 	}
 	
-	public HashSet<String> getSubWords() {
-		HashSet<String> result = new HashSet<String>();
+	public ArrayList<String> getSubWords() {
+		ArrayList<String> result = new ArrayList<String>();
 		for (String subword : allWords) {
 			if (isValid(subword, myWord) && subword.length() > 2) {
 				result.add(subword);
